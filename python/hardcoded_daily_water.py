@@ -1,24 +1,42 @@
 
 class DailyWaterIntake:
 
-    def __init__(self, water):
+    def __init__(self, gender):
         self.gender = gender
-        self.water = None
 
-    def gender(self):
-        gender = input('Are you male or female: [m/f]')
+    #
+    # def gender(self):
+    #     gender = input('Are you male or female: [m/f]')
 
-
-    def neccessary_water(self, water):
+    def neccessary_water(self):
         try:
             self.gender
+            if self.gender.lower() == 'male':
+                water = 124
 
-            if self.gender == 'm':
-                print('you have entered male')
-                self.water = 124
-                print(self.water)
+            if self.gender.lower() == 'female':
+                water = 92
 
-            if self.gender == 'f':
-                print('you have etered female')
         except Exception as arg:
             print('Error due to [{}]'.format(str(arg)))
+            return False
+
+        return 'You have entered {}. Therefore your daily water intake is {}oz.'.format(
+            self.gender, water)
+
+male = DailyWaterIntake('Female')
+print(male.neccessary_water())
+
+#
+# def main():
+#
+#
+#     waterintake = DailyWaterIntake()
+#     if waterintake.neccessary_water() is False:
+#         print('Unabale to calculatedaily water intake')
+#         sys.exit(1)
+#
+#
+#
+# if __name__ == '__main__':
+#     main()
