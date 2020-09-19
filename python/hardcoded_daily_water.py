@@ -1,29 +1,47 @@
+import sys
 
-# class DailyWaterIntake:
-#will add class capability after making the function version work
-#
-# def __init__(self, gender):
-#     self.gender = gender
 
-def user_gender(self):
-    return self.gender
+class DailyWaterIntake:
 
-def neccessary_water(self):
-    try:
-        self.gender
-        if self.gender.lower() == 'male':
-            water = 124
+    def __init__(self, gender):
+        self.gender = gender
 
-        if self.gender.lower() == 'female':
-            water = 92
+    def user_gender(self):
+        return gender
 
-    except Exception as arg:
-        print('Error due to [{}]'.format(str(arg)))
-        return False
+    def neccessary_water(self):
 
-    return 'You have entered {}. Therefore your daily water intake is {}oz.'.format(
-        self.gender, water)
+        water = ''
+        try:
+            self.gender
+            if self.gender.lower() == 'male':
+                water = 124
 
-entered_gender = input('Please enter your gender[m/f]: ')
 
-check = user_gender(entered_gender)
+            if self.gender.lower() == 'female':
+                water = 92
+
+        except Exception as arg:
+            print('Error due to [{}]'.format(str(arg)))
+            return False
+
+        print('You have entered {}. Therefore your daily water intake is {} oz.'.format(
+            self.gender, water))
+
+        return True
+
+
+def main():
+
+    user = input('Please enter your gender[m/f]: ')
+    water_test = DailyWaterIntake(gender=user)
+
+    if water_test.neccessary_water() is False:
+        print('Unable to calculate the neccesart water intake for you')
+        sys.exit(1)
+
+    print('Done!')
+    sys.exit(0)
+
+if __name__ == "__main__":
+    main()
