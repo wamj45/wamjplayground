@@ -7,7 +7,7 @@ class DailyWaterIntake:
 
     def __init__(self, gender):
         self.gender = gender
-        self.daily_water = ''
+        self.daily_water = None
         self.water_drunk = 0
         self.total_water_drunk = 0
 
@@ -32,7 +32,7 @@ class DailyWaterIntake:
             print('Ok cool no water bottles for you :)')
         else:
             amt_water_from_bottles = bottles_drank * water_bottle
-            print('That equates to {:.2f}'.format(amt_water_from_bottles))
+            print('That equates to {:.2f}oz'.format(amt_water_from_bottles))
             # Water the heck is this variable 'self.water'?
             # TODO:
             # create a new list and function which contains the total amt of
@@ -60,9 +60,10 @@ class DailyWaterIntake:
             return False
         #Need to edit this print statement. the you have enterd part is kinda
         #weird as the program expands
-        print('You have entered {}. Therefore your daily water intake is {} oz.'.format(
-            self.gender, self.daily_water))
+        # print('You have entered {}. Therefore your daily water intake is {} oz.'.format(
+        #     self.gender, self.daily_water))
 
+        # This check does not make sense how can it be False
         if self.amt_water_drunk() is False:
             print("So you have not drinken any water today, that's OK fam!")
             return False
