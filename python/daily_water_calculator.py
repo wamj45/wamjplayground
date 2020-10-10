@@ -1,8 +1,6 @@
 
 import sys
 
-#need to add a variable which wil hold all of the water drunk for a day
-# go back an rename these variable sthey are too similar and it is confusing
 class DailyWaterIntake:
 
     def __init__(self, gender):
@@ -26,7 +24,6 @@ class DailyWaterIntake:
 
         else:
             self.water_drunk = self.bottle_water + water_drank
-            # Call the self.total_water_drunk here and create its amt of water
 
         return True
 
@@ -62,7 +59,7 @@ class DailyWaterIntake:
         return True
 
     def total_water(self):
-        # This should be called first and cause the rest of the program to run
+
         if self.amt_water_drunk() is False:
             print('Unable to initialize program')
             return False
@@ -74,21 +71,14 @@ class DailyWaterIntake:
         self.total_water_drunk = self.water_drunk - self.necessary_water
 
         if self.total_water_drunk < 0:
-            # This means you still need to drink more water
-            # Convert to a positive number for display
             water_needed = self.total_water_drunk * (-1)
-            print('You still should drink {:.2f}oz of water'.format(water_needed))
-
+            print('You should still drink {:.2f}oz of water'.format(water_needed))
 
         elif self.total_water_drunk >= 0:
-            # this means you have met yur quota for water intake
             print('You drank enough water for today!')
             print('You are {}oz over your daily needs'.format(self.total_water_drunk))
 
-
-
         return True
-
 
 def main():
 
