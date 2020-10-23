@@ -1,9 +1,20 @@
+#**********************  math_quiz.py  *********************
+#
+# Name: Wilbert A Martinez Jr
+#
+# Course: CSCI 1470
+#
+# Assignment: Homework #1
+#
+# Algorithm
+#   Prompt user to start the quiz
+#   Generate Math quiz starting with addition questions
+#   Continue with subtraction, multiplication, division, then modulus questions
+#   Calulate final score and output it
+#**********************************************************
+
 import random
 import sys
-# This program should give the user two problems for each of the following
-# operations to solve:
-# +,-,*,/ and %
-# each of the math operations should have its own function
 
 class MathQuiz:
 
@@ -33,8 +44,6 @@ class MathQuiz:
         if ans2 == user_entry2:
             self.add_score += 1
 
-        print('You got {} questions right'.format(self.add_score))
-
         return True
 
     def subtraction_questions(self):
@@ -55,8 +64,6 @@ class MathQuiz:
 
         if ans4 == user_entry4:
             self.sub_score += 1
-
-        print('You got {} questions right'.format(self.sub_score))
 
         return True
 
@@ -79,8 +86,6 @@ class MathQuiz:
         if ans6 == user_entry6:
             self.multiply_score += 1
 
-        print('You got {} questions right'.format(self.multiply_score))
-
         return True
 
     def division_questions(self):
@@ -102,11 +107,26 @@ class MathQuiz:
         if ans8 == user_entry8:
             self.divide_score += 1
 
-        print('You got {} questions right'.format(self.divide_score))
-
         return True
 
     def modulus_questions(self):
+
+        mod1 = random.randint(1,20)
+        mod2 = random.randint(1,20)
+        mod3 = random.randint(1,20)
+        mod4 = random.randint(1,20)
+
+        ans9 = mod1 % mod2
+        ans0 = mod3 % mod4
+
+        user_entry9 = int(input('{} % {} = '.format(mod1, mod2)))
+        user_entry0 = int(input('{} % {} = '.format(mod3, mod4)))
+
+        if ans9 == user_entry9:
+            self.mod_score += 1
+
+        if ans0 == user_entry0:
+            self.mod_score += 1
 
         return True
 
@@ -122,19 +142,35 @@ class MathQuiz:
             print('Error - Unable to load the multiplication questions')
 
         if self.division_questions() is False:
-            print('Error - Unable to load the division_questions')
+            print('Error - Unable to load the division questions')
+
+        if self.modulus_questions() is False:
+            print('Error - Unable to load the modulus questions')
+
+        total_score = self.divide_score + self.add_score + self.sub_score + self.multiply_score + self.mod_score
+        percentage = total_score * 10
+        print('You answered {} questions correctly. You scored a {}'.format(total_score, percentage))
 
         return True
 
 def main():
 
-    quiz = MathQuiz()
-    if quiz.calculate_score() is False:
-        print('Error - Unable to load quiz')
-        sys.exit(1)
+    start_msg = 'Please enter [q] to quit the quiz. Otherwise, enter any key to coninue: '
+    user_input = str(input(start_msg))
 
-    # Need to add a run back option
-    print('Done!')
+
+    while user_input != 'q':
+        quiz = MathQuiz()
+        if quiz.calculate_score() is False:
+            print('Error - Unable to load quiz')
+        print('Done!')
+        user_input = str(input(start_msg))
+
+    if user_input == 'q':
+        print('Goodbye')
+        sys.exit(0)
+
+
 
 if __name__ == '__main__':
     main()
