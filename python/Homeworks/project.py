@@ -9,9 +9,20 @@
 # Algorithm:
 #   Prompt user to enter the directory to search for images
 #   call ImageEvaluator
+#       Initialize values/variables to be used throughout the program
 #       pass in user input as path
-#       search for images within path and append them to a list
-#       Iterate through the list and calculate brightness and luminance for each image
+#       verify the path the program is running in is the same path containing images
+#       if not change to the correct directory containing the images
+#       Start
+#           search for images of all types within path and append them to a list
+#           Iterate through the list and calculate luminance for each image,
+#               return relative luminance
+#           Iterate through the image list once more and calculate the brightness of each image
+#               return precieved brightness
+#           Load data into dictiunary
+#           Convert dictionary to JSON file and write to file in the directory
+#       End
+#
 # **********************************************************
 
 import os
@@ -80,11 +91,6 @@ class ImageEvaluator:
 
     def brightness_calculation(self):
     # Calculates the brightness of an image. Returns as a precieved brightness of image
-        if self.load_images() is False:
-            print('Error - Unable to begin brightess calculation')
-            return False
-
-        dir = self.get_correct_dir()
 
         for image in self.image_list:
             # Convert image to greyscale (black and white)
@@ -92,38 +98,60 @@ class ImageEvaluator:
             stat = ImageStat.Stat(img)
             # average brightness of all pixels, returns as a list of one element
             brightness = stat.mean[0]
-            print('[{}] has a brightness of: [{}]'.format(image, brightness))
 
-            # Todo:
-            # Add to dictionary the brightess level of each image
-            # self.data[image] = brightness
-
-        return True
+        return brightness
 
     def luminance_calculation(self):
 
         dir = self.get_correct_dir()
 
         for image in self.image_list:
-            # print(image)
+
             img = Image.open(image)
             stat = ImageStat.Stat(img)
             # R,G,B average values
-            rgb_values = stat.mean
-            r = stat.mean[0]
-            g = stat.mean[1]
-            b = stat.mean[2]
+            try:
+                rgb_values = stat.mean
+                r = stat.mean[0]
+                g = stat.mean[1]
+                b = stat.mean[2]
 
-            # Todo:
-            # Call this method
-            # Add a check
-            # Add to the dictionary the calues of relative luminance
+            except Exception as arg:
+                print('{}. RGB values cannot be completely filled for [{}]'.format(str(arg), image))
+            # print(f"This is the {g}")
+            if r not in rgb_values:
+                r = 0.0
+                rgb_values.append(r)
+            if g not in rgb_values:
+                g = 0.0
+                rgb_values.append(g)
+            if b not in rgb_values:
+                b = 0.0
+                rgb_values.append(b)
 
-        return True
+            if len(rgb_values) > 3:
+                rgb_values = rgb_values[:3]
+
+            print(f"These are the values: {rgb_values} for image: [{image}]")
+            luminance = [r,g,b]
+            self.data[image] = 'luminance'
+            self.data[image]['luminance'] = luminance
+        return luminance
 
     def output(self):
          # for img in self.image_list:
          #     self.data[img] =
+        if self.load_images() is False:
+             print('Error - Unable to locate images files in [{}]'.format(
+                self.path))
+        if self.luminance_calculation() is False:
+             print('Error - Unable to calculate luminance')
+             return False
+        if self.brightness_calculation() is False:
+            print('Error - Unable to calculate brightness')
+            return False
+
+        print(self.data)
         return True
 def main():
     # This is kind of annoying to type everytime.
@@ -134,13 +162,11 @@ def main():
     user_path = '/home/wamj/Pictures/Pics/'
     # Calls the ImageEvaluator class and exits if cannot run
     image_evaluater = ImageEvaluator(user_path)
-    if image_evaluater.brightness_calculation() is False:
+    if image_evaluater.output() is False:
         print('Failed to load images from [{}]'.format(user_path))
         sys.exit(255)
 
         # Need to add a check for incorrect path
-
-
 
 if __name__ == '__main__':
     main()
