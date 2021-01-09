@@ -30,13 +30,10 @@ import json
 import sys
 import math
 import fnmatch
-import re
 
 # Python Imaging Library(PIL) used to manipulate images in Python
 from PIL import Image
 from PIL import ImageStat
-
-FILENAME_REGEX = '[0-9,A-Z,_-]+'
 
 class ImageEvaluator:
 
@@ -44,7 +41,11 @@ class ImageEvaluator:
     # Initialize values
         self.path = path
         self.image_list = []
-        self.data = {}
+        self.data = []
+        self.img_dict = None
+        self.luminance_dict = {}
+        self.brightness_dict = {}
+
     # Changes the dir to the path containing images
     def get_correct_dir(self):
         current_dir = os.getcwd()
@@ -69,7 +70,6 @@ class ImageEvaluator:
                 return False
 
             for file_type in files:
-                # print('test')
                 if fnmatch.fnmatch(file_type, jpg_type):
                     self.image_list.append(file_type)
                 elif fnmatch.fnmatch(file_type, JPG_type):
@@ -86,39 +86,30 @@ class ImageEvaluator:
                     print('Error - Unable to locate any image files in [{}]. Please try a diffent file path.'
                         .format(self.path))
                     return False
-
         return True
 
-    def brightness_calculation(self):
-    # Calculates the brightness of an image. Returns as a precieved brightness of image
-
-        for image in self.image_list:
-            # Convert image to greyscale (black and white)
-            img = Image.open(image).convert('L')
-            stat = ImageStat.Stat(img)
-            # average brightness of all pixels, returns as a list of one element
-            brightness = stat.mean[0]
-
-        return brightness
-
     def luminance_calculation(self):
+        # Calculates the relative luminance and the brightness of an image
 
+        # Gets the correct containing the images first
         dir = self.get_correct_dir()
 
         for image in self.image_list:
-
             img = Image.open(image)
             stat = ImageStat.Stat(img)
-            # R,G,B average values
+            grey_img = img.convert('L')
+            grey_stat = ImageStat.Stat(grey_img)
+            # R,G,B average values, if any value is None, will continue to iterate
             try:
                 rgb_values = stat.mean
                 r = stat.mean[0]
                 g = stat.mean[1]
                 b = stat.mean[2]
-
+                brightness = grey_stat.mean[0]
+                brightness = '{:.2f}'.format(brightness)
             except Exception as arg:
-                print('{}. RGB values cannot be completely filled for [{}]'.format(str(arg), image))
-            # print(f"This is the {g}")
+                print('{}. Missing RGB values will be passed in as 0.0 for [{}]'.format(str(arg), image))
+            # If missing a value for R,G, and/or B then 0.0 will be set for missing value
             if r not in rgb_values:
                 r = 0.0
                 rgb_values.append(r)
@@ -129,44 +120,54 @@ class ImageEvaluator:
                 b = 0.0
                 rgb_values.append(b)
 
+            # Ignores the RGBA format, which is utilized by default
             if len(rgb_values) > 3:
                 rgb_values = rgb_values[:3]
 
-            print(f"These are the values: {rgb_values} for image: [{image}]")
-            luminance = [r,g,b]
-            self.data[image] = 'luminance'
-            self.data[image]['luminance'] = luminance
-        return luminance
+            r_value = 'Red: {:.2f}'.format(r)
+            g_value = 'Green: {:.2f}'.format(g)
+            b_value = 'Blue: {:.2f}'.format(b)
+
+            # Calculation of luminance
+            luminance = (0.2126 * r) + (0.7152 * g) + (0.0722 * b)
+            luminance = '{:.2f}'.format(luminance)
+
+            # Populating dictionary for each image
+            self.img_dict = {'Image': image}
+            self.img_dict['RBG Values'] = [r_value, g_value, b_value]
+            self.img_dict['Luminance'] = luminance
+            self.img_dict['Brightness'] = brightness
+
+            self.data.append(self.img_dict)
+        return True
 
     def output(self):
-         # for img in self.image_list:
-         #     self.data[img] =
+        # Program starts here
         if self.load_images() is False:
              print('Error - Unable to locate images files in [{}]'.format(
                 self.path))
         if self.luminance_calculation() is False:
              print('Error - Unable to calculate luminance')
              return False
-        if self.brightness_calculation() is False:
-            print('Error - Unable to calculate brightness')
-            return False
+        # Writes output to a JSON file
+        with open("data.json", "w") as data_file:
+            json.dump(self.data, data_file)
 
-        print(self.data)
         return True
 def main():
-    # This is kind of annoying to type everytime.
-    # May have to add a click and drag into terminal
+
     # Asks user to enter dir containing images
     path_message = 'Please enter the directory/folder containing the images: '
     # user_path = input(path_message)
-    user_path = '/home/wamj/Pictures/Pics/'
+    user_path = input(path_message)
     # Calls the ImageEvaluator class and exits if cannot run
     image_evaluater = ImageEvaluator(user_path)
     if image_evaluater.output() is False:
         print('Failed to load images from [{}]'.format(user_path))
         sys.exit(255)
-
-        # Need to add a check for incorrect path
+    else:
+        print('Done!')
+        print('Look in [{}] for output file'.format(user_path))
 
 if __name__ == '__main__':
     main()

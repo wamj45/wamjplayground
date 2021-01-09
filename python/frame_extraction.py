@@ -41,9 +41,7 @@ class ImageCreator:
             success = getFrame(sec)
 
 def main():
-
     image_creator = ImageCreator()
-    
 
 if __name__ == '__main__':
     main()

@@ -1,0 +1,26 @@
+#**********************  project.py  *********************
+#
+# Name: Wilbert Acosta Martinez Jr
+#
+# Course: CSCI 1470
+#
+# Assignment: CSCI Python Project
+#
+# Algorithm:
+#   Prompt user to enter the directory to search for images
+#   call ImageEvaluator
+#       Initialize values/variables to be used throughout the program
+#       pass in user input as path
+#       verify the path the program is running in is the same path containing images
+#       if not change to the correct directory containing the images
+#       Start
+#           search for images of all types within path and append them to a list
+#           Iterate through the list and calculate luminance for each image,
+#               return relative luminance
+#           Iterate through the image list once more and calculate the brightness of each image
+#               return precieved brightness
+#           Load data into dictiunary
+#           Convert dictionary to JSON file and write to file in the directory
+#       End
+#
+# **********************************************************
