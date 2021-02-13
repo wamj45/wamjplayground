@@ -22,20 +22,13 @@ class FileCleanUp():
             files.append(file)
         return files
 
-
     def extract(self):
-        print(f"These are the args parsed in: [{self.file}] and [{self.filename}]")
-        print(f"This is the current working dir: [{self.current_dir}]")
-
         with zipfile.ZipFile(self.file, 'r') as zip_ref:
             zip_ref.extractall(self.current_dir)
 
         return True
 
     def erase_files(self):
-        # if self.extract() is False:
-        #     print("Error")
-        #     return False
         files = self.listdir(self.current_dir)
         for ext in config.REMOVABLE_EXT:
             for file in files:
@@ -43,13 +36,13 @@ class FileCleanUp():
                     remove_path = f"{self.current_dir}/{file}"
                     os.remove(remove_path)
         for dir in config.REMOVABLE_DIRS:
-            os.remove(dir)
+            shutil.rmtree(dir)
 
         return True
 
     def load_stl_files(self):
-        new_stl_dir = self.filename
-        stl_path = os.path.join(self.current_dir, new_stl_dir)
+
+        stl_path = os.path.join(self.current_dir, self.filename)
         os.mkdir(stl_path)
 
         files = self.listdir(self.current_dir)
@@ -63,19 +56,43 @@ class FileCleanUp():
 
         return True
 
+    def file_manager(self):
+        print(self.file)
 
+        if self.extract() is False:
+            print("Error - Unable to extract file")
+            return False
 
+        if self.load_stl_files() is False:
+            print("Error - Unable to load STL files")
+            return False
+
+        print("Removing unnecessary files...\n")
+        if self.erase_files() is False:
+            print("Error - Unable to erase files")
+            return False
+
+        print(f"Your STL files are in: [{self.current_dir}/{self.filename}]")
+
+        return True
+
+def zip_cleanup(path):
+    zip_path = path[1:-2]
+    zip_file = os.path.basename(zip_path)
+    return zip_file
 
 
 def main():
-    # file = input("Please enter STL zip file file:\n")
-    file = config.FILENAME
+    zip_path = input("Please enter STL zip file file:\n")
     filename = input("What whould you like to call your new STL directory:\n")
+    file = zip_cleanup(zip_path)
 
     file_cleaner = FileCleanUp(file, filename)
-    if file_cleaner.load_stl_files() is False:
+    if file_cleaner.file_manager() is False:
         print("Error - please check ")
         sys.exit(255)
+
+    print("Done!")
 
 if __name__ == "__main__":
     main()
