@@ -20,11 +20,15 @@ class PasswordManager():
     def create_txt_file(self, file):
         create_file = open(file, "w+")
         create_file.close()
-        return create_txt_file
+        return create_file
 
     def write_txt_file(self):
-        if self.open_txt_file(self.password_file) is False:
-            self.create_txt_file(self.password_file)
+        try:
+            self.open_txt_file(self.password_file)
+        except Exception as arg:
+            print(f"Error - No {self.password_file} found" + str(arg))
+
+        self.create_txt_file(self.password_file)
         return True
 
     def open_txt_file(self, file):
