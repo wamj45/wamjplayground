@@ -27,8 +27,10 @@ class PasswordManager():
             self.open_txt_file(self.password_file)
         except Exception as arg:
             print(f"Error - No {self.password_file} found" + str(arg))
+            print(f"Creating the Password Manager file in this dir...")
 
-        self.create_txt_file(self.password_file)
+            self.create_txt_file(self.password_file)
+        
         return True
 
     def open_txt_file(self, file):
