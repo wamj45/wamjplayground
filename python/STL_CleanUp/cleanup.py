@@ -25,7 +25,6 @@ class FileCleanUp():
     def extract(self):
         with zipfile.ZipFile(self.file, 'r') as zip_ref:
             zip_ref.extractall(self.current_dir)
-
         return True
 
     def erase_files(self):
@@ -38,10 +37,8 @@ class FileCleanUp():
         for dir in config.REMOVABLE_DIRS:
             shutil.rmtree(dir)
 
-        return True
 
     def load_stl_files(self):
-
         stl_path = os.path.join(self.current_dir, self.filename)
         os.mkdir(stl_path)
 
@@ -53,7 +50,6 @@ class FileCleanUp():
                 source_path = f"{self.current_dir}/files/{stl}"
                 destination_path = f"{stl_path}/{stl}"
                 move = shutil.move(source_path, destination_path)
-
         return True
 
     def file_manager(self):
@@ -73,7 +69,6 @@ class FileCleanUp():
             return False
 
         print(f"Your STL files are in: [{self.current_dir}/{self.filename}]")
-
         return True
 
 def zip_cleanup(path):
