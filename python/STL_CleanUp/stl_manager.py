@@ -7,9 +7,10 @@
 
 import os
 import sys
-from locate_files import FileFinder
-import cleanup
 import config
+
+from cleanup import ZipFileManager, STLFileManager
+from locate_files import FileFinder
 
 class STLManager():
 
@@ -24,17 +25,41 @@ class STLManager():
         files = file_loader.load_fileslist()
         self.zip_files = files[0]
         self.stl_files = files[1]
+        return True
 
-        if len(self.stl_files) == 0 and len(self.zip_files) == 0:
+    def file_cleaner(self):
+        try:
+            self.load_files()
+        except Exception as err:
+            print("Unable to load files")
+            print(str(err))
+            return False
+
+        if len(self.zip_files) != 0:
+            print(f"Run the zip file manager now")
+            for zip_file in self.zip_files:
+                self.zip_file_manager(zip_file)
+        elif len(self.stl_files) != 0:
+            print("Run the stl file manager for eachfile")
+            for stl_file in self.stl_files:
+                self.stl_file_manager(stl_file)
+        else:
             print("No files found")
             print(f"Please check [{self.download_path}] for any STL or Zip files")
+            return False
+        return True
+
+    def stl_file_manager(self, stl_file):
+        dir_name = input(f"Please enter the name of the new dir for: [{stl_file}]\n")
+        manager = STLFileManager(stl_file, dir_name)
+        if manager.save_to_dir() is False:
             return False
 
         return True
 
 def main():
     run = STLManager()
-    if run.load_files() is False:
+    if run.file_cleaner() is False:
         sys.exit(0)
 
 if __name__ == '__main__':

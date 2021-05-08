@@ -4,21 +4,20 @@
 # 3. mv the STL files into a dir(user will need to enter name w/o .zip)
 
 import os
-import sys
 import zipfile
 import config
-import shutil
+import pathlib
 
-class FileCleanUp():
+class ZipFileManager():
 
-    def __init__(self, file, filename):
-        self.file = file
+    def __init__(self, zip_file, filename):
+        self.zip_file = zip_file
         self.filename = filename
-        self.current_dir = os.getcwd()
+        self.current_dir = config.get_downloads_path()
 
 
     def extract(self):
-        with zipfile.ZipFile(self.file, 'r') as zip_ref:
+        with zipfile.ZipFile(self.zip_file, 'r') as zip_ref:
             zip_ref.extractall(self.current_dir)
         return True
 
@@ -31,3 +30,23 @@ class FileCleanUp():
                     os.remove(remove_path)
         for dir in config.REMOVABLE_DIRS:
             shutil.rmtree(dir)
+
+class STLFileManager():
+
+    def __init__(self, stl_file, dirname):
+        self.stl_file = stl_file
+        self.new_dirname = dirname
+
+    def create_dir(self):
+        stls_path = config.get_STL_path()
+        new_filepath = os.path.join(stls_path, self.new_dirname)
+        os.mkdir(new_filepath)
+        return new_filepath
+
+    def save_to_dir(self):
+        # Have to use the rename method
+        # https://www.geeksforgeeks.org/how-to-save-file-with-file-name-from-user-using-python/
+        stl_save_dir = self.create_dir()
+        print(stl_save_dir)
+
+        return True
