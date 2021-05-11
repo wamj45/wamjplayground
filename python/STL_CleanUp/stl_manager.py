@@ -51,8 +51,10 @@ class STLManager():
 
     def stl_file_manager(self, stl_file):
         dir_name = input(f"Please enter the name of the new dir for: [{stl_file}]\n")
-        manager = STLFileManager(stl_file, dir_name)
+        stl_file_path = os.path.join(self.download_path, stl_file)
+        manager = STLFileManager(stl_file_path, dir_name, stl_file)
         if manager.save_to_dir() is False:
+            print(f"Error - Failed to move [{stl_file}] to [{stl_file_path}]")
             return False
 
         return True
