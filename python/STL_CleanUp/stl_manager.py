@@ -56,8 +56,14 @@ class STLManager():
         if manager.save_to_dir() is False:
             print(f"Error - Failed to move [{stl_file}] to [{stl_file_path}]")
             return False
-
         return True
+
+    def zip_file_manager(self, zip_file):
+        dir_name = input(f"Please enter the name of the new dir for: [{zip_file}]\n")
+        
+
+
+        return False
 
 def main():
     run = STLManager()

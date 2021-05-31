@@ -30,6 +30,7 @@ class ZipFileManager():
                     os.remove(remove_path)
         for dir in config.REMOVABLE_DIRS:
             shutil.rmtree(dir)
+        return True        
 
 class STLFileManager():
 
