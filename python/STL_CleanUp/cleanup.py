@@ -30,7 +30,7 @@ class ZipFileManager():
                     os.remove(remove_path)
         for dir in config.REMOVABLE_DIRS:
             shutil.rmtree(dir)
-        return True        
+        return True
 
 class STLFileManager():
 
@@ -49,5 +49,17 @@ class STLFileManager():
         stl_save_dir = self.create_dir()
         dest = os.path.join(stl_save_dir, self.stl_file)
         src = self.stl_file_path
-        shutil.copyfile(src, dest)
+        try:
+            shutil.copyfile(src, dest)
+        except OSError as e:
+            print(f"Error - [{src}] [{e.strerror}]")
+            return False
+        return True
+
+    def remove_old_file(self, og_file):
+        try:
+            os.remove(og_file)
+        except OSError as e:
+            print(f"Error - {og_file} {e.strerror}")
+            return False
         return True
