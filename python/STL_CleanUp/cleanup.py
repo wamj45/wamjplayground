@@ -8,13 +8,18 @@ import zipfile
 import config
 import shutil
 
+def create_dir(dir_name):
+    stls_path = config.get_STL_path()
+    new_filepath = os.path.join(stls_path, dir_name)
+    os.mkdir(new_filepath)
+    return new_filepath
+
 class ZipFileManager():
 
-    def __init__(self, zip_file, filename):
+    def __init__(self, zip_file, zip_dir_name):
         self.zip_file = zip_file
-        self.filename = filename
+        self.zip_dir_name = zip_dir_name
         self.downloads_dir = config.get_downloads_path()
-
 
     def extract(self):
         with zipfile.ZipFile(self.zip_file, 'r') as zip_ref:
@@ -39,14 +44,8 @@ class STLFileManager():
         self.new_dirname = dirname
         self.stl_file = stl_file
 
-    def create_dir(self):
-        stls_path = config.get_STL_path()
-        new_filepath = os.path.join(stls_path, self.new_dirname)
-        os.mkdir(new_filepath)
-        return new_filepath
-
     def save_to_dir(self):
-        stl_save_dir = self.create_dir()
+        stl_save_dir = create_dir(self.new_dirname)
         dest = os.path.join(stl_save_dir, self.stl_file)
         src = self.stl_file_path
         try:

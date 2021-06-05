@@ -63,7 +63,8 @@ class STLManager():
 
     def zip_file_manager(self, zip_file):
         dir_name = input(f"Please enter the name of the new dir for: [{zip_file}]\n")
-
+        zip_file_path = os.path.join(self.download_path, zip_file)
+        manager = ZipFileManager(zip_file_path, dir_name)
 
 
         return False
