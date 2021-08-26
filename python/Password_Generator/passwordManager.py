@@ -34,6 +34,12 @@ class PasswordManager():
             # Write the site, note and the password into the file
             # Close the file
             # Use a dictionary
+
+            file = open(self.password_file, 'w')
+            file.write(self.generate_password())
+            file.close()
+
+
         return True
 
     def open_txt_file(self, file):
