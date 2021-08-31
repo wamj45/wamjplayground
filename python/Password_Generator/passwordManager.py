@@ -19,7 +19,7 @@ class PasswordManager():
 
     def create_txt_file(self, file):
         create_file = open(file, "w+")
-        create_file.close()
+        # create_file.close()
         return create_file
 
     def write_txt_file(self):
@@ -29,16 +29,18 @@ class PasswordManager():
             print("Error - " + str(arg))
             print(f"Creating the Password Manager file in this dir...")
 
-            self.create_txt_file(self.password_file)
+            newFile = self.create_txt_file(self.password_file)
 
             # Write the site, note and the password into the file
             # Close the file
             # Use a dictionary
 
-            file = open(self.password_file, 'w')
-            file.write(self.generate_password())
-            file.close()
-
+            # Create a new method which will handle the output
+            # It should also have a line counter
+            # Add a gitignore to keep the passwords safe
+            outputString = f"{self.site} {self.note} {self.generate_password()}"
+            newFile.write(outputString)
+            newFile.close()
 
         return True
 
