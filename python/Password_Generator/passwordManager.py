@@ -14,38 +14,21 @@ class PasswordManager():
         self.note = note
         self.password_file = "PasswordManager.txt"
 
-    def create_password(self):
-        return password
-
-    def create_txt_file(self, file):
-        create_file = open(file, "w+")
-        # create_file.close()
-        return create_file
-
-    def write_txt_file(self):
+    def writeToFile(self):
         try:
-            self.open_txt_file(self.password_file)
+            outputString = f"Site: {self.site}\tNote: {self.note}\tPassword: {self.generate_password()}"
+            f = self.open_txt_file(self.password_file)
+            f.write(outputString)
+            f.close()
+            print(f"Successfully created password for {self.site}")
         except Exception as arg:
-            print("Error - " + str(arg))
-            print(f"Creating the Password Manager file in this dir...")
-
-            newFile = self.create_txt_file(self.password_file)
-
-            # Write the site, note and the password into the file
-            # Close the file
-            # Use a dictionary
-
-            # Create a new method which will handle the output
-            # It should also have a line counter
-            # Add a gitignore to keep the passwords safe
-            outputString = f"{self.site} {self.note} {self.generate_password()}"
-            newFile.write(outputString)
-            newFile.close()
-
+            print(str(arg))
+            print("Exiting...")
+            sys.exit(255)
         return True
 
     def open_txt_file(self, file):
-        f = open(file, "r")
+        f = open(file, "a")
         return f
 
     def generate_password(self):
@@ -53,15 +36,15 @@ class PasswordManager():
         password = generate.replace("-", "")
         return password
 
-
 def main():
     site = input("Please enter the site/application we are generating a password for: ")
     note = input("\nPlease enter a quick note about this password: ")
 
     passwordmanager = PasswordManager(site, note)
-    if passwordmanager.write_txt_file() is False:
+    if passwordmanager.writeToFile() is False:
         print("Error - Unable to open/create the text file for password")
         sys.exit(255)
+    print("Done!")
 
 if __name__ == "__main__":
     main()
