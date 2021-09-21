@@ -6,6 +6,7 @@
 import os
 import sys
 import uuid
+import json
 
 class PasswordManager():
 
@@ -16,9 +17,11 @@ class PasswordManager():
 
     def writeToFile(self):
         try:
-            outputString = f"Site: {self.site}\tNote: {self.note}\tPassword: {self.generate_password()}"
+            password = self.generate_password()
+            # outputString = f"Site: {self.site}\tNote: {self.note}\tPassword: {self.generate_password()}"
+            outputDict = dict({self.site : password})
             f = self.open_txt_file(self.password_file)
-            f.write(outputString)
+            f.write(json.dumps(outputDict))
             f.close()
             print(f"Successfully created password for {self.site}")
         except Exception as arg:
@@ -31,10 +34,24 @@ class PasswordManager():
         f = open(file, "a")
         return f
 
+    def read_txt_file(self, file):
+        f = open(file, "r")
+        return f
+
     def generate_password(self):
         generate = str(uuid.uuid4())
         password = generate.replace("-", "")
         return password
+
+    # Verify site provided does not already have a password existing
+    # Convert ouptut to a JSON file that way we only have to search for the key as the Site
+
+    def passwordCheck(self):
+        f = self.read_txt_file(self.password_file)
+        for line in f:
+            print(line)
+
+        pass
 
 def main():
     site = input("Please enter the site/application we are generating a password for: ")
@@ -45,6 +62,7 @@ def main():
         print("Error - Unable to open/create the text file for password")
         sys.exit(255)
     print("Done!")
+    sys.exit(0)
 
 if __name__ == "__main__":
     main()
