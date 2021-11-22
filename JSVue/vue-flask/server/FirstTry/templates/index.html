@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Testing VueJS</title>
+    <link rel='shortcut icon' type='image/x-icon' href='/static/images/favicon.ico' />
+  </head>
+
+  <body>
+<!-- The id 'vm' is just for consistency - it can be anything you want -->
+    <div id="app">
+        <h1>[[ greeting ]]</h1>
+        <p>[[ description ]]</p>
+        <p><a :href="link">[[ site ]]</a></p>
+
+        <div class="ConditionsCheck">
+          <p v-if="cond > 120">You've won this week fam!!</p>
+          <p v-else-if="cond<=120 && cond>100">You need to pray bro!</p>
+          <p v-else>Hell Nah!!!! You lost this one!!!!!</p>
+        </div>
+
+        <ul>
+          <li v-for="player in arrPlayers">[[ player]]</li>
+        </ul>
+
+    </div>
+
+
+    <div id="app-5">
+      <p>[[ message ]]</p>
+      <button v-on:click="reverseMessage">Reverse Message</button>
+    </div>
+
+    <div id="">
+
+    </div>
+
+
+    <script src="/static/js/jquery.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+  </body>
+</html>
