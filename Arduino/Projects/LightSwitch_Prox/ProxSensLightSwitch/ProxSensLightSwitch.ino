@@ -16,5 +16,6 @@ void loop() {
     Serial.println("Door is open.\nTurning Lights on!");
     digitalWrite(RELAY_PIN, HIGH);
   }
+  else {digitalWrite(RELAY_PIN, LOW);}
   delay(500);
 }
