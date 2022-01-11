@@ -17,5 +17,5 @@ void loop() {
     digitalWrite(RELAY_PIN, HIGH);
   }
   else {digitalWrite(RELAY_PIN, LOW);}
-  delay(500);
+  delay(250);
 }
