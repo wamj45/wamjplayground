@@ -1,27 +1,15 @@
 #include <iostream>
-#include <tuple>
-#include <array>
-#include <string_view>
-#include <type_traits>
+#include <string>
+#include <filesystem>
+#include <unistd.h>
 
-namespace a::b::c
-{
-  inline constexpr std::string_view str{ "hello" };
-}
+using std::cout; using std::cin;
+using std::endl; using std::string;
+using std::filesystem::current_path;
 
-template <class... T>
-std::tuple<std::size_t, std::common_type_t<T...>> sum(T...args)
-{
-  return { sizeof...(T), (args + ...) };
-}
-int main()
-{
-  auto [iNumbers, iSum]{ sum(1, 2, 3) };
-  std::cout << a::b::c::str << ' ' << iNumbers << ' ' << iSum << '\n';
+int main() {
 
-  std::array arr{ 1,2,3};
+    cout << "Current working directory: " << current_path() << endl;
 
-  std::cout << std::size(arr) << '\n';
-
-  return 0;
+    return EXIT_SUCCESS;
 }
