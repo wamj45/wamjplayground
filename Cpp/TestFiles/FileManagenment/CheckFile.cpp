@@ -1,15 +1,19 @@
 #include <iostream>
-#include <string>
 #include <filesystem>
-#include <unistd.h>
 
 using std::cout; using std::cin;
-using std::endl; using std::string;
-using std::filesystem::current_path;
+namespace fs = std::filesystem;
 
-int main() {
+const fs::path pathToShow{ argc >= 2 ? argv[1] : fs::current_path() };
 
-    cout << "Current working directory: " << current_path() << endl;
-
-    return EXIT_SUCCESS;
+for (const auto& entry : fs::directory_iterator(pathToShow)) {
+    const auto filenameStr = entry.path().filename().string();
+    if (entry.is_directory()) {
+        cout << "dir:  " << filenameStr << '\n';
+    }
+    else if (entry.is_regular_file()) {
+        cout << "file: " << filenameStr << '\n';
+    }
+    else
+        cout << "??    " << filenameStr << '\n';
 }
