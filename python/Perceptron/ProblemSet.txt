@@ -1,0 +1,28 @@
+1.1)
+  a. X:[medical history, symptoms], y:[problem], f:[Diagnoses]
+  b. X:[handwritten examples], y:[handwritten answer], f:[digit recognizer]
+  c. X:[emails, spam emails], y:[good, spam], f:[email]->[good, spam]
+  d. X:[historical data composed of price, temp, dayOfWeek], y:[electrical load], f:[future load]
+  e. Problem PID Tuner Controller. For a PID Controller you need the values of
+      Proportional, Intergral, and Derivative Gains. You want a target value, say temperature,
+      you input the target temperature and P,I,D values for your system into the controller and
+      the output of the controller will be something like voltage/power you need set your system
+      to in order to maintain your target temperature based on current temp. Assuming we use similar systems.
+      X:[Dataset of predetermined working temps] y:[P, I, D values used on those systems] f:[P,I,D for your system]
+
+1.3)
+  a.
+
+
+
+1.6)
+  a. Supervised. We would use the users past data to get a prediction of what books
+      she/he likes and make recommendations on future books.
+  b. We would use Reinforcement training in this case.
+  c. We could use Unsupervised training in this case. We don't care about the categories.
+      But we want them to be grouped in some form. We can then transition to Supervised to
+      correctly identify/label the groups.
+  d. Reinforcement. We use a dataset of musical notes. And reward when notes are played in a
+      certain arrangment.
+  e. Here we would use a Supervised learning system. We would use past data to predict
+      if a maximum credit limit.
