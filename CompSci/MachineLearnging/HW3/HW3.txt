@@ -1,0 +1,24 @@
+Name:   Wilbert Martinez
+StuID:  1067756
+
+Exercises
+4.1)
+  We know that the 2nd order must be contained in the 10th order hypothesis set by
+  rule of polynomials.
+
+4.3)
+  a. Deterministic noise will go up. Overfitting will also increase.
+  b. Becasue the complexity of H decreases deterministic noise goes down. Overfitting will
+      increase, however.
+
+Problem
+4.2)
+  From Legrande Polynomials:
+    L0 = 1
+    L1 = x
+    L2 = 1/2(3x^2-1)
+
+    [1, -1, 1] * [1, x, 1/2(3x^2-1)]^T = h(x)
+    h(x) = 1 - x + 1/2(3x^2) - 1/2
+    h(x) = (3/2)x^2 - x + (1/2)
+    This is of 2nd degree

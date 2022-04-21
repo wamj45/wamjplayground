@@ -1,0 +1,47 @@
+3.3)
+  a. H = XX^t
+        -----
+         XX^t
+
+    symmetric iff H = H^t
+
+    H^t = (XX^t
+          -----
+           XX^t)^t
+
+        = X^tX / X^tX
+      which is equivalent to H Therefor H is symmetric
+
+    b. H^k = (XX^t / XX^t)^k
+        what will happen is that the transpose times a transpose will cancel leaving X and
+        X * X^t yields X^t, therefore no matter what k is we will always get H
+
+    c. Same concept as part b. We know that H^k = H. And by properties of identity matrices
+        I^k is also equal to I. Therefore we can say (I-H) = (I-H)^k
+
+    d. 
+
+
+
+3.5)
+  a.  tanh(s) = (e^s - e^-s) / (e^s + e^-s)
+      0(s) = (e^s) / (1+e^s)
+
+     tanh(s) = e^s(e^s + e^-s)    (e^-s)(e^s + e^-s)
+              ----------------  - ------------------
+                (e^s + e^-s)        (e^s + e^-s)
+
+          ->    e^s(e^s)        (e^-s)(e^-s)
+                -----------  - -------------
+                e^s(1 + e^-s)   (e^-s)(1+e^s)
+
+          ->    e^s                  (e^s)+(e^-s+e^-s)
+              ------------------ -  --------------------
+              (1+e^s)+(e^-s+e^s)         (1+e^s)
+
+          -> 0(s)
+            ---------- - 0(s)+2e^-s
+            (e^-s+e^s)
+
+    b. As s approaches infinity, the hyperbolic tangent function will converge to 1.
+       As s approaches 0, then the hyperbolic tangent function converges to 0.
