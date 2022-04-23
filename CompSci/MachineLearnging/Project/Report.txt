@@ -1,0 +1,23 @@
+Wilbert A Martinez Jr.
+Student ID: 1067756
+CSCI 4336
+
+                                    Project Report
+
+Objective:
+   Utilize the [enter algorithm] in order to predict the winner of the next UEFA
+Champions League Final based on this years tournament's results. ESPNS'
+SPI Global Rankings were used due to it providing a strength level for each team's
+defense and offense. According to ESPN's website "SPI is forward-looking and predictive".
+This statement was the driving force for attempting this project.
+
+
+Dataset:
+   The dataset used can be found at Kaggle: https://www.kaggle.com/datasets/jpmiller/global-club-soccer-ratings?select=spi_global_rankings_intl.csv
+
+Methodology:
+   Dataset needed to be adjusted for this use case. An "*" was added to each Champions League
+qualifying team. Group letter was added to each team for quick sorting of the groups.
+Predicted winner of each match should take into account SPI, offensive, and defensive
+rankings. The sum of these values will be compared to the opponent's values. The larger
+of the two should, indicate winner. This will be tested against true results.

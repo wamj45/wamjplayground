@@ -1,5 +1,10 @@
 import java.io.*;
 import java.util.Scanner;
+import java.util.Random;
+
+enum GradientDescentChoice {
+	STOCHASTIC, BATCH
+}
 
 public class project {
 
@@ -12,43 +17,23 @@ public class project {
     return new_arr;
   }
 
-  public static String[] getGroup(String[] champions, char groupName) {
-    String[] group_arr = new String[4];
-    int count = 0;
-    for (int i=0; i<champions.length; i++) {
-      char group = champions[i].charAt(champions[i].length() - 1);
-      if (groupName == group) {group_arr[count] = champions[i]; count++;}
-      }
-    return group_arr;
+  public static String[] getRanking(String[] arr) {
+    String[] rankings = new String[arr.length];
+    for (int i = 0; i < arr.length; i++) {
+      char rankComma = arr[i].charAt(',');
+      String rank = arr[1].subtring(rankComma);
+    }
+    return rankings;
   }
 
-  public static String[] getChampionsLeague(String[] teams) {
-    // There are 32 teams that qualify for the UEFA Champions League
-    // Adding in a Mid Tier Brazilian team to replace missing team FC Sheriff from Moldova
-    String[] champions = new String[32];
-    int count = 0;
-    for (int team = 0; team < teams.length; team++) {
-        int star = teams[team].indexOf("*");
-        if (star > 0) {
-          champions[count] = teams[team];
-          count++;
-          }
-        }
-    return champions;
-  }
+
 
   public static void main(String[] args) throws Exception {
     project projectManager = new project();
+    // LinearRegressionBasic linearRegress = new LinearRegressionBasic();
     String[] data = new String[631];
     int count = 0;
-    char A = 'A';
-    char B = 'B';
-    char C = 'C';
-    char D = 'D';
-    char E = 'E';
-    char F = 'F';
-    char G = 'G';
-    char H = 'H';
+
 
     Scanner dataset = new Scanner(new File("spi_global_rankings.csv"));
     dataset.useDelimiter(";");
@@ -62,16 +47,49 @@ public class project {
     dataset.close();
 
     String[] remove_text = projectManager.removeFirst(data);
+    String[] rankingsTest = projectManager.getRanking(remove_text);
 
-    String[] qualifiedTeams = projectManager.getChampionsLeague(remove_text);
 
-    String[] groupA = projectManager.getGroup(qualifiedTeams, A);
-    String[] groupB = projectManager.getGroup(qualifiedTeams, B);
-    String[] groupC = projectManager.getGroup(qualifiedTeams, C);
-    String[] groupD = projectManager.getGroup(qualifiedTeams, D);
-    String[] groupE = projectManager.getGroup(qualifiedTeams, E);
-    String[] groupF = projectManager.getGroup(qualifiedTeams, F);
-    String[] groupG = projectManager.getGroup(qualifiedTeams, G);
-    String[] groupH = projectManager.getGroup(qualifiedTeams, H);
   }
 }
+
+// public class LinearRegressionBasic {
+// 	private double m;
+// 	private double c;
+// 	private double learningRate = 0.001d;
+// 	private int epoch = 1000;
+// 	private double[][] trainingSet;
+// 	private GradientDescentChoice gradientChoice;
+// 	public LinearRegressionBasic(double[][] set, int epoch, GradientDescentChoice gradientChoice) {
+// 		this.trainingSet = set;
+// 		this.epoch = epoch > 0 ? epoch : this.epoch;
+// 		this.gradientChoice = gradientChoice;
+// 		trainModel();
+// 	}
+// 	private final void trainModel() {
+// 		stochasticGradientDescent();
+// 	}
+// 	private void stochasticGradientDescent() {
+// 		for (int i = 0; i < epoch * 100; i++) {
+// 			Random random = new Random();
+// 			int randomIndex = random.nextInt(trainingSet.length);
+// 			double slopeGradient = derivativeWithRespectToSlope(trainingSet[randomIndex][0],
+// 					trainingSet[randomIndex][1], m, c);
+// 			double interceptGradient = derivativeWithRespectToIntercept(trainingSet[randomIndex][0],
+// 					trainingSet[randomIndex][1], m, c);
+// 			this.m = m - learningRate * slopeGradient;
+// 			this.c = c - learningRate * interceptGradient;
+// 		}
+// 	}
+// 	private double derivativeWithRespectToSlope(Double actual, Double x, Double slope, Double intercept) {
+// 		double derivative = x * (slope * x + intercept - actual);
+// 		return derivative;
+// 	}
+// 	private double derivativeWithRespectToIntercept(Double actual, Double x, Double slope, Double intercept) {
+// 		double derivative = (slope * x + intercept - actual);
+// 		return derivative;
+// 	}
+// 	public double predict(double predictForValue) {
+// 		return c + (m * predictForValue);
+// 	}
+// }
