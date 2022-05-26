@@ -1,0 +1,5 @@
+Build System:
+  - Mac Studio
+  - Python: 3.8.9
+  - Text editor: Atom.io
+  
