@@ -1,29 +1,57 @@
 #include <Servo.h>
 
-#define ServoPin 9
+#define   PAN_SERVO_PIN     9
+#define   TILT_SERVO_PIN    10
+#define   PAN_BUTTON        3
+#define   TILT_BUTTON       4
 
-Servo testServo;
+Servo panServo;
+Servo tiltServo;
+
 int pos = 0;
 int delayTime = 2;
 
-void setup() {
-  Serial.begin(9600);
-  testServo.attach(ServoPin);
+// Servo can handle 270degs of motion
+void respondNo()
+{
+  Serial.println("RUDDE saying no");
+  for (pos = 0; pos <= 270; pos += 1) {
+    panServo.write(pos);
+    delay(delayTime);
+  }
 
-  Serial.println("Starting Servo Control!");
-
+  for (pos = 270; pos >= 0; pos -= 1) {
+    panServo.write(pos);
+    delay(delayTime);
+   }
 }
 
-void loop() {
-  Serial.println("Moving the servo in the positive dir...");
-  for (pos = 0; pos <= 180; pos += 1) {
+void respondYes()
+{
+  Serial.println("RUDDE saying yes");
+  for (pos = 0; pos <= 270; pos += 1) {
     testServo.write(pos);
     delay(delayTime);
   }
 
-  Serial.println("Moving the servo in the negative dir...");
-  for (pos = 180; pos >= 0; pos -= 1) {
+  for (pos = 270; pos >= 0; pos -= 1) {
     testServo.write(pos);
     delay(delayTime);
    }
+}
+
+void setup() {
+  Serial.begin(9600);
+  panServo.attach(PAN_SERVO_PIN);
+  tiltServo.attach(TILT_SERVO_PIN);
+
+  pinMode(PAN_BUTTON, INPUT);
+  // pinMode(TILT_BUTTON, INPUT);
+
+  Serial.println("Starting Servo Control!");
+}
+
+void loop() {
+  if (digitalRead(PAN_BUTTON) == HIGH) {respondNo();}
+  // if (digitalRead(TILT_BUTTON) == HIGH) {respondYes();}
 }
