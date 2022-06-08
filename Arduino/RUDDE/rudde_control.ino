@@ -9,7 +9,7 @@ Servo panServo;
 Servo tiltServo;
 
 int pos = 0;
-int delayTime = 2;
+int delayTime = 5;
 
 // Servo can handle 270degs of motion
 void respondNo()
@@ -54,4 +54,5 @@ void setup() {
 void loop() {
   if (digitalRead(PAN_BUTTON) == HIGH) {respondNo();}
   // if (digitalRead(TILT_BUTTON) == HIGH) {respondYes();}
+  delay(500)
 }
