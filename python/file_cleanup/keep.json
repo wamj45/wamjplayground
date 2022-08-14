@@ -1,0 +1,15 @@
+{
+  "target_path": "path/to/dir/here",
+  "keep_things": {
+    "files": {
+      "file1": "test.txt",
+      "file2": "test2.txt"
+    },
+    "extensions": {
+      "stls": "*.stl",
+      "step": "*.step",
+      "pdf": "*.pdf",
+      "3mf": "*.3mf"
+    }
+  }
+}
