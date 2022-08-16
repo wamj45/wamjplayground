@@ -1,5 +1,6 @@
 {
-  "target_path": "path/to/dir/here",
+  "target_path": "/Users/wamj45/Downloads/",
+  "target_dir": "files.zip",
   "keep_things": {
     "files": {
       "file1": "test.txt",
