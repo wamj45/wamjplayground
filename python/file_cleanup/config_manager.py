@@ -15,3 +15,6 @@ class CfgManager:
             print(f"Error: [{self.cfg_file}] NOT found! Please verify file")
             return False
         return True
+
+    def load_config(self):
+        return self.config
